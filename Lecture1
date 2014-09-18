@@ -1,0 +1,308 @@
+Graphics82814
+OpenGL - modern, CROSS PLATFORM, open source with many language bindings
+
+3035489089
+email filter:4229, 5229
+
+assignments in c/c++ (can do any language)
+Need to be comfortable with linear algebra
+	-vectors, surfaces, normals,
+	-Matrix and vector multiplication
+	-dot and cross products
+	-rotation matrices
+
+grading:
+satisfactory completion of all assignments: => A
+assignments due thursday evening 11:59 pm (grace period until friday morning at 8 AM)
+
+code reuse is acceptable
+	-give credit where it is due
+	-take responsibility for errors in reused code
+	-you need to make a substantial improvement
+no grade => respond to my comments and resubmit
+
+opengl: a primer
+computer graphics: a primer
+opengl programming guide
+
+embedded opengl texts: 
+opengl ES 2.0 programming guide
+	-munshi, ginsburg, schreiner
+
+opengl resources
+safari (books)
+google
+opengl.org
+nehe.gamedev.net
+mesa3d.org
+class forum
+
+assignment 0: tuesday 9/2
+enrollment key 42295229
+attach picture
+submit: your name and study area
+	platform: hardware,graphics,os
+	background, interests in computer graphics
+	project ideas (if you have one)
+	CAETE students propose schedule for homework
+
+getting started:
+OS/X free sdk (Xcode)
+
+assignment 1:
+due 9/11 midnight 23:59 pm
+compile and run gears and answer a few questions
+get working opengl setup
+
+assignment 2:
+due 9/18 23:59 pm
+draw opengl based visualization of the lorenz attractor
+	at a minimum show static line path in 3d
+	user control of attractor params
+	add rotation with cursors
+purpos is scientific visualization
+example 6 is your friend
+
+assignment 3: 
+9/25 normal time
+visualize a 3d scene
+consist of SOLID 3d objects 
+create them yourself (no GLUT imported)
+
+assignment 4: 
+10/2
+visualize a 3d scene using both orthogonal and perspective projections
+add this to assignment 3
+
+assignment 5: 
+10/9
+add lighting to assignment 4
+this is very hard.....	:D
+
+assignment 6: 
+do project stuff(proposal)
+
+assignment 7: 10/23 
+texture mapping to assignment 5
+
+
+advanced graphics:
+shaders:
+	-explicitly programming the GPU
+embedded systems:
+	-iphone, android, webGL
+GPU work threads (CUDA & openCL)
+Ray tracing
+
+
+Copmlete assignments on any platfrom
+	assignments reviewed under ubuntu 14.04.1
+	set #ifdef so i can compile and run it
+submit on moodle
+zip,tar
+name executables hw1,hw2
+create a makefile so i can do make clean; make
+set window title to assignment X: your name 
+include hours sent on assignment
+check my feedback, resubmit if requested
+
+
+
+WHAT IS OPENGL?
+sometimes called a language, actually an API
+specs controlled by OpenGL architecture review board (ARB)
+multiple implementations by different vendors
+	-Mesa and FreeGLUT free implementations
+OpenGL just does real time graphics
+	-need GLX/WGL/AGL for windowing and input
+	-Limited font support (in GLUT)
+	-No support for sound,printing, etc
+started 1992
+we will work in openGL 2.0
+	->flat learning curve!
+
+OpenGL APIs
+languages:
+c,c++,c#
+fortran
+java
+...missed rest of slide
+
+OpenGL and friends:
+
+|________________|ApplicationProgram|	    |
+|	GLUT 		 |				   	|	GLU |
+|	GLX/WGL/AGL	 |	OpenGL          |_______|
+|	Window system|__________________________|
+_________________|Graphics Hardware___________|
+
+
+GLUT: GL Utility Toolkit
+provides access to OS and Window System
+	-open windows and setting size and capabilities
+	-register and triggers callbacks
+	-keyboard and mouse interaction
+	-elementary 
+
+	.....check this slide!
+
+
+Header files and libraries
+usually you only need:
+	#define GL_GLEXT_PROTOTYPES
+	#include <GL/glut.h>
+Header file locations
+	/usr/include/GL on most systems
+	apple:/usr/include/GLUT/glut.h???
+Linking may only need
+	-l glut -l GLU -l GL -l m
+special cases
+	OX/X separates GL and GLUT
+	windows differs depending on the compiler
+
+
+OpenGL Naming conventions:
+glDoSomethingXy(){}
+	->DoSomething = function name
+X is 2 or 3 or 4 for dimension
+y is for the variable type
+	-> check reference for GL data types
+
+
+OpenGL naming  example
+Vertex
+	glVertex3i(0,0,1)
+	glVertex2d(27.34,88.12)
+few functions return a value
+most functions created by name mangling
+constants are GL_SOMETHING
+variable types are GLsomething
+
+GLUT and GLU naming
+functions:
+	glutDoSomething
+	gluDoSomething
+Constants
+	GLUT_SOMETHING
+	GLU_SOMETHING
+	don't mix these up!
+you can always tell by the name which API supplies a function or constant
+
+GLUT
+Hellow world
+int main(int argc, char* argv[])
+{
+	glutInit(&argc,argv);
+	glutCreateWindow("HELLO world");
+	glutDisplayFunc(display);
+	glutMainLoop();
+	glutSpecialFunc(special);
+	glEnable(GL_DEPTH_TEST);
+
+	//entire function except for "display"
+}
+
+//draw a triangle
+#include <GL/glut.h>
+void display()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+	glLoadIdentity();
+	glRotatef(th,0.0,1.0,0.0);
+	glBegin(GL_POLYGON);
+	glColor3f(1.0,0.0,0.0) //concept of gl state machine; 
+						   all vertices after this will be colored in this fashion, that is why we have to call it before
+	glVertex2f(_,_,_)	//
+	glColor3f(1.0,0.0,0.0)
+	glVertex2f(_,_,_)	// 3 vertices
+	glColor3f(1.0,0.0,0.0)  //calling it before creates interpolation
+	glVertex2f(_,_,_)	//
+	glEnd();
+	glFlush();
+}
+
+
+compile, link and run
+cc -o helloworld helloworld.c -lglut
+
+gcc -oWall -o ex1 ex1.c -lglut -lGL
+
+
+void special(int key, int x, int y)
+{
+	if (key == GLUT_KEY_RIGHT)
+		th+=5;
+	elsif (key == GLUT_KEY_LEFT)
+		th -= 5;
+
+
+}
+
+Double buffering on GPU
+
+
+3D STUFF:
+
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	glRotatef(th,0.0,1.0,0.0);
+	glBegin(GL_POLYGON);
+	glColor3f(1.0,0.0,0.0); //concept of gl state machine; 
+						   all vertices after this will be colored in this fashion, that is why we have to call it before
+	glVertex2f(_,_,_)	//
+	glColor3f(1.0,0.0,0.0);
+	glVertex2f(_,_,_)	// 3 vertices
+	glColor3f(1.0,0.0,0.0);  //calling it before creates interpolation
+	glVertex2f(_,_,_)	//
+	glTranslate()
+	glBegin(GL_POLYGON);
+	glColor3f(1.0,1.0,0.0)
+	glColor3f(0.0,1.0,1.0)
+	glColor3f(1.0,0.0,1.0)
+	glEnd();
+	glFlush();
+
+	glutSwapBuffers();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

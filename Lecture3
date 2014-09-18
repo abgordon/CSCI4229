@@ -1,0 +1,142 @@
+HOMOGENEOUS COORDINATES
+basic 2d transformations
+Translation/scaling/rotation (see slides)
+
+compound transformations
+Translation
+scaling
+rotation
+
+Vector rotation by construction
+rotate x,x axis to unit vector
+	-see slide for equations
+
+3d homogeneous transformation
+-transformation matrices will always be of the form ->(see slide)
+-4x4 vector with w
+-> * w should really be 1 *
+-note that translation, scaling, and rotation or any combination of these three never changes the value of w
+	-there are transformations that modify w
+
+order of calls in OpenGL
+what is the resulting x' = M1M2M3x for 
+	-gltranslate(1000,2000,3000)
+	-glrotate(90,0,0,1)
+	-glscale(10,20,30)
+	.....
+	-glvertex(1,0,0)
+x' = (1000,2010,3000)   	
+
+***
+-if we do these in the reverse order bc we right multiply matrices!
+***
+
+first try: how do we interpret that?
+start with (1,0,0)
+glTranslate(1000,2000,3000)
+1,0,0+1000,2000,3000
+rotate(90,0,0,1)	->rotations are around the origin, so we have to transform it to the origin first
+glScale (multiplies vectors by values)
+
+OpenGL Transformation matrices
+you can set matrices explicitly in openGL
+-glloadmatric(double mat[16])
+-glMultMatrix(double mat[16])
+we do matri storing the fortran way -> COLUMN major order
+setting matrices may be convenient when you calc vectors instead of angles
+
+
+useful vector results
+C=AxB
+-c is perpendicular to the plane formed by A and B
+-c is zero when A,B are parallel
+c = Ax(BxA)
+-c is perpendicular to A
+-c is in the plane formed by A and B
+-c is zero when A and B are parallel
+ 
+This gives you 3 orthodonal vectors you can plug into our homogeneous rotation formula (Make sure they are unit length!)
+
+Multiple convex objects:
+-render objects from far to near
+-rely on painters algorithm to paint over obscured part of objects
+	-device must support erasing
+-does not work for concave objects
+-does not work when objects intersect
+
+Z-buffering
+store depth (z) on a pixel by pixel basis
+draw a new pixel only if it is nearer than existing z value for that pixel
+-must init z-buffer before drawing
+requires hardware support
+-8/16/24/32 bits
+-'z-fighting' when dz is too large (overwriting z buffer so everything is the same val)
+-floating point Z buffer new in openGL 3.0
+
+
+Z-buffering and face culling 
+-z-buffering ensures correct rendering
+-face culling eliminates entire backward polygons
+-face culling decides which faces you can see and which you can't, then draws the appropriate thing
+-use z buffering except in very rare circumstances
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+sample outputs:
+
+smallest possible size (1x1):
+8898 frames in  5.000 seconds = 1779.600 FPS
+9232 frames in  5.000 seconds = 1846.400 FPS
+9717 frames in  5.000 seconds = 1943.400 FPS
+9092 frames in  5.000 seconds = 1818.400 FPS
+
+300x300
+6526 frames in  5.000 seconds = 1305.200 FPS
+7703 frames in  5.000 seconds = 1540.600 FPS
+8348 frames in  5.000 seconds = 1669.600 FPS
+8412 frames in  5.000 seconds = 1682.400 FPS
+8380 frames in  5.000 seconds = 1676.000 FPS
+
+Full screen
+1397 frames in  5.001 seconds = 279.344 FPS
+1375 frames in  5.006 seconds = 274.670 FPS
+1414 frames in  5.001 seconds = 282.743 FPS
+1521 frames in  5.002 seconds = 304.078 FPS
+1535 frames in  5.000 seconds = 307.000 FPS
+
+1.  The time taken to render a "frame" or graphics window depends on the size because there are simply more pixels to draw on the screen.  This isn't a matter of euclidean size on the screen but because the resolution changes with the resizing of the screen.  If we maintained the same resolution across screen size, the frame rates would be equal (excepting the variation in FPS that occurs due to the varying demands of your operating system).
+
+2.  This didn't happen to me and I don't know anyone who encountered this, nor could I find a good reason in any documentation, so I am hesitant to say this is the actual reason, but this could be your actual low framerate because of a bad (or lack of) GPU, or that the FPS is normalized by some division that represents FPS as printed output = (actual / 1000 ).  Likewise with multiplication for some desired output.  Or, your GPU could be overclocking and needlessly redrawing frames.
+
+Time to complete assignment:  Luckily I had gcc and cmake already installed on my computer and can run the programs from command line so about 20 minutes

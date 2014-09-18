@@ -1,0 +1,192 @@
+CSCI4229 9/4/14
+
+EVENT DRIVEN PROGRAMMING
+"don't call us, we'll call you"
+	-register callbacks corresponding to events
+	-similar to interrupt driven programming
+...other stuff
+
+TYPES OF OBJECTS
+glBegin(type)
+GL_POINTS points
+GL_LINES lines between points
+GL_LINE_STRIP			-> probably use this for lorenz attractor; make contour of strips
+GL_LINE_LOOP
+GL_POLYGON
+GL_TRIANGLES 	-> specify vertices; draws lines for you
+GL_TRIANGLE_STRIP
+GL_TRIANGLE_FAN -> if you specify a point and a series of points around it, it will make a series of trianges around center point
+GL_QUADS 				-> same as triangles but with quadrilaterals
+GL_QUADS_STRIP
+glEnd()
+
+
+Qualifiers
+!!! missed slide...can specify point/line width etc
+
+Color
+Default is RGB color
+-X11 TrueColor
+-RGB 0-1 or integer range
+-glColor3f(1.0,1.0,1.0)
+-glColor3v(127,0,0)
+-glColor3ub(255,0,0)
+-glColor3fv(rbgarray)
+
+Color can also contain transparency (alpha)
+-glColor4f(1.0,1.0,1.0,1.0)
+-Default alpha = 1.0 (opaque)
+Stays in efect until you change color
+
+Indexed Color 	- DEPRECATED
+X11 Direct Color
+-based on a colormap
+Set color using glIndexi(27)
+Need to load colors into color map using gluSetColor()
+Use RGB color unless hardware constrained
+Deprecated in OpenGL3 since it is super obsolete
+
+Displaying a scene
+-register using glutDisplayFunc()
+-glClear()
+-DRAW SOMETHING.....
+-glFlush
+-glutSwapBuffers()
+-Schedule using glutPostRedisplay()
+
+Transformations!
+Transformations apply to everything that follows
+Transformations are cumulative
+-call glLoadIdentity() in display()
+Primitive operations
+
+-glLoadIdentity()
+-glTranslate[fd](dx,dy,dz)
+-glScale[fd](Sx,Sy,Sz)
+-glRotate[fd](angle,Ux,Uy,Uz)
+Compatibility profile in OpenGL4 still useful
+
+glTranslate[fd](dx,dy,dz)
+Move an object in three dimensions
+allows you to easily produce multiple copies of an object
+always takes 3d coordinates
+
+glScale[fd](Sx,Sy,Sz)
+Change the scale along the axes
+multiplicative factors
+|S| < 1 shrink
+|S| > 1 expand
+negative values create mirror image
+Allows you to easily create multiple copies of the same type at different sizes
+
+glRotate[fd](angle, Ux,Uy,Uz)
+rotates around the origin and axis
+angle is measured in degrees 
+the axis can be a primary axis XYZ but may be any you wish(?)
+allows you to create multiple copies of the same object viewed from different sides or to view the scene from different positions
+
+Temporary Transformations
+glPushMatrix()
+-saves the current transformations
+glPopMatrix()
+-Resets the transformation to what it was when you did the push
+Allows you to build complex transformations and then get them back
+
+Compound Transformations
+Rotate angle around the point (XYZ) and axis (Ux,Uy,Uz)
+-glTranslated(-X,-Y,-Z) (or positive values)
+-glRotated(angle,Ux,Uy,Uz)
+OpenGL does this intelligently
+
+Projections
+Othographic
+-glOrtho(left,right,bottom,top,near,far)
+-same size regardless of distance
+-easiest to use
+Perspective
+-glFrustrum(left,right,bottom,top,near,far)
+-closer object are bigger
+-GLU convenience functions
+	->gluPerspective(fov,aspect,Znear,Zfar)
+	->gluLookAt(Ex,Ey,Ez,Cs,Cy,Cz,Ux,Uy,Uz)
+
+Registering Callbacks
+Display
+-glutDisplayFunc() draw scene
+-glutReshapeFunc() window resized
+-glutIdleFunc() Nothing more
+
+User Input
+-glutKeyboardFunc() keypress
+-glutSpecialFunc() special key pressed
+-glutMouseFunc() mouse button
+-glutMotionFunc() Mouse motion
+.....and many many more....
+
+Keyboard Input
+special(int key, int x, int y)
+-cursor keys GLUT_KEY_LEFT,...
+
+Setting modes
+glutInitDisplayMode
+-interfaces with the window manager to get the right kind of window (careful about defaults!)
+-glEnable() & glDisable()
+-switches openGL into various modes
+
+Error checking
+OpenGL fails silently
+functions don't return an error code
+glGetError() must be called explicitly to check for errors
+a black screen is the only real error code..........
+
+
+DIMENSIONS
+...see slides
+
+
+2d Cartesian Coordinate Systems
+World Coordinates
+-Xmin,Xmax....
+Normalized device coordinates
+-0-1 x 0-1 or x 0-r
+-may  be isometric
+-viewport Umin-Umax X Vmin - Vmax
+Device coordinates
+-pixels,plotter increments
+-origin may be top left
+
+Transformations
+-A form of linear transforms
+World to nomralized device coordinates
+normalized device to world coordinates
+Invertible!
+
+Vector lines
+Explicit/parametric
+
+Clipping
+Cohen-Sutherland Line Clipping
+-set bits to ID outside zones
+-trivial accept or reject
+-clip non-trivial cases
+-accept or reject
+
+Liang-Barsky algorithm: Parametric line clipping
+-readily extends to 3d and irregular windows
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
